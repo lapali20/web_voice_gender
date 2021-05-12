@@ -1,0 +1,53 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!--<script type="text/javascript">{% include "index.js" %}</script>-->
+
+<body>
+    <div class="container">
+        <div>
+            <h1> Tool </h1>
+            <p> Audio
+            <p>
+        </div>
+        <label for="audio_file">Upload audio file</label>
+        <input class="btn btn-warning" type="file" id="audio_file" name="myfile">
+        <br>
+        <button class="btn btn-success" onclick="performAPI()"> Test </button>
+        <br>
+        <hr style="width:100%;text-align:left;margin-left:0">
+        <hr style="width:100%;text-align:left;margin-left:0">
+        <div id="results" style="display: grid; grid-template-columns: repeat(5, 1fr); grid-gap:10px;"></div>
+    </div>
+    <script>
+        function performAPI() {
+        var files = document.getElementById("audio_file").files
+        var formData = new FormData();
+        var endpoint = '/route_gender';
+
+        formData.append('file', files[0])
+
+        $.ajax({
+            type: 'POST',
+            url: endpoint,
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success : function(data){
+                console.log("Upload successful",data);
+                swal("test",data.class_name);
+            },
+            error: function(e){
+                console.log("Upload failed", e);
+            }
+        });
+        }
+    </script>
+</body>
